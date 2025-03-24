@@ -5,7 +5,7 @@ This repository is the official PyTorch implementation of [AccVideo](). AccVideo
 
 [![arXiv](https://img.shields.io/badge/arXiv-2403.15103-b31b1b.svg)]()
 [![Project Page](https://img.shields.io/badge/Project-Website-green)]()
-[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow)]()
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow)]()
 
 ## 🔥🔥🔥 News
 
@@ -13,6 +13,9 @@ This repository is the official PyTorch implementation of [AccVideo](). AccVideo
 
 
 ## 🎥 Demo
+
+
+https://github.com/user-attachments/assets/59f3c5db-d585-4773-8d92-366c1eb040f0
 
 
 
@@ -41,13 +44,13 @@ pip install "huggingface_hub[cli]"
 To download the checkpoints, use the following command:
 ```bash
 # Download the model weight
-huggingface-cli download Wan-AI/Wan2.1-T2V-14B --local-dir ./ckpts
+huggingface-cli download aejion/AccVideo --local-dir ./ckpts
 ```
 
 ## 🚀 Inference
 We recommend using a GPU with 80GB of memory. To run the inference, use the following command:
 ```bash
-export MODEL_BASE=/mnt/hwfile/gcc/zhanghaiyu/AccVideo
+export MODEL_BASE=./ckpts
 python sample_t2v.py \
     --height 544 \
     --width 960 \
@@ -59,12 +62,12 @@ python sample_t2v.py \
     --flow-reverse \
     --prompt_file ./assets/prompt.txt \
     --seed 1024 \
-    --output_path ./results/test \
-    --model_path /mnt/hwfile/gcc/zhanghaiyu/AccVideo \
-    --dit-weight /mnt/hwfile/gcc/zhanghaiyu/AccVideo/accvideo-t2v-5-steps/diffusion_pytorch_model.pt
+    --output_path ./results/accvideo-544p \
+    --model_path ./ckpts \
+    --dit-weight ./ckpts/accvideo-t2v-5-steps/diffusion_pytorch_model.pt
 ```
 
-The following table shows the comparisons on inference time on a single A100 GPU:
+The following table shows the comparisons on inference time using a single A100 GPU:
 
 |    Model     | Setting(height/width/frame) | Inference Time(s) |
 |:------------:|:---------------------------:|:-----------------:|
