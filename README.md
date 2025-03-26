@@ -3,9 +3,9 @@
 This repository is the official PyTorch implementation of [AccVideo](). AccVideo is a novel efficient distillation method to accelerate video diffusion models with synthetic datset. Our method is 8.5x faster than HunyuanVideo.
 
 
-[![arXiv](https://img.shields.io/badge/arXiv-2403.15103-b31b1b.svg)]()
-[![Project Page](https://img.shields.io/badge/Project-Website-green)]()
-[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow)]()
+[![arXiv](https://img.shields.io/badge/arXiv-2503.19462-b31b1b.svg)](https://arxiv.org/abs/2503.19462)
+[![Project Page](https://img.shields.io/badge/Project-Website-green)](https://aejion.github.io/accvideo/)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow)](https://huggingface.co/aejion/AccVideo)
 
 ## 🔥🔥🔥 News
 
@@ -79,10 +79,15 @@ The following table shows the comparisons on inference time using a single A100 
 
 ## 🔗 BibTeX
 
-If you find [AccVideo]() useful for your research and applications, please cite using this BibTeX:
+If you find [AccVideo](https://arxiv.org/abs/2503.19462) useful for your research and applications, please cite using this BibTeX:
 
 ```BibTeX
-
+@article{zhang2025accvideo,
+    title={AccVideo: Accelerating Video Diffusion Model with Synthetic Dataset},
+    author={Zhang, Haiyu and Chen, Xinyuan and Wang, Yaohui and Liu, Xihui and Wang, Yunhong and Qiao, Yu},
+    journal={arXiv preprint arXiv:2503.19462},
+    year={2025}
+}
 ```
 
 ## Acknowledgements
