@@ -1,6 +1,6 @@
 # AccVideo: Accelerating Video Diffusion Model with Synthetic Dataset
 
-This repository is the official PyTorch implementation of [AccVideo](). AccVideo is a novel efficient distillation method to accelerate video diffusion models with synthetic datset. Our method is 8.5x faster than HunyuanVideo.
+This repository is the official PyTorch implementation of [AccVideo](https://arxiv.org/abs/2503.19462). AccVideo is a novel efficient distillation method to accelerate video diffusion models with synthetic datset. Our method is 8.5x faster than HunyuanVideo.
 
 
 [![arXiv](https://img.shields.io/badge/arXiv-2503.19462-b31b1b.svg)](https://arxiv.org/abs/2503.19462)
