@@ -9,7 +9,8 @@ This repository is the official PyTorch implementation of [AccVideo](https://arx
 
 ## 🔥🔥🔥 News
 
-* Mar, 2025: We release the inference code and model weights of AccVideo.
+* Mar 31, 2025: [ComfyUI-Kijai (FP8 Inference)](https://huggingface.co/Kijai/HunyuanVideo_comfy/blob/main/accvideo-t2v-5-steps_fp8_e4m3fn.safetensors): ComfyUI-Integration by [Kijai](https://huggingface.co/Kijai)
+* Mar 26, 2025: We release the inference code and model weights of AccVideo.
 
 
 ## 🎥 Demo
