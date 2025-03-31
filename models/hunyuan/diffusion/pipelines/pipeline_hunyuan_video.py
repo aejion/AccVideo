@@ -961,11 +961,11 @@ class HunyuanVideoPipeline(DiffusionPipeline):
         num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
         self._num_timesteps = len(timesteps)
 
-        if few_step:
-            start_latent_list = [0, 10, 20, 30, 40, 50]
-            self.scheduler.sigmas = self.scheduler.sigmas[start_latent_list]
-            num_inference_steps = 5
-            timesteps = timesteps[start_latent_list[:num_inference_steps]]
+        # if few_step:
+        #     start_latent_list = [0, 10, 20, 30, 40, 50]
+        #     self.scheduler.sigmas = self.scheduler.sigmas[start_latent_list]
+        #     num_inference_steps = 5
+        #     timesteps = timesteps[start_latent_list[:num_inference_steps]]
 
         print('sigmas used in generation:', self.scheduler.sigmas)
         print('inference timesteps used in generation:', timesteps)

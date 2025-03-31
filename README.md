@@ -55,7 +55,7 @@ python sample_t2v.py \
     --height 544 \
     --width 960 \
     --num_frames 93 \
-    --num_inference_steps 50 \
+    --num_inference_steps 5 \
     --guidance_scale 1 \
     --embedded_cfg_scale 6 \
     --flow_shift 7 \
