@@ -78,12 +78,13 @@ class WanT2V:
             tokenizer_path=os.path.join(checkpoint_dir, config.t5_tokenizer),
             shard_fn=shard_fn if t5_fsdp else None)
 
+        self.text_encoder.model.to(self.device)
+
         self.vae_stride = config.vae_stride
         self.patch_size = config.patch_size
         self.vae = WanVAE(
             vae_pth=os.path.join(checkpoint_dir, config.vae_checkpoint),
             device=self.device,)
-        self.vae.model.to(torch.device('cpu'))
 
         logging.info(f"Creating WanModel from {checkpoint_dir}")
         self.model = WanModel.from_pretrained(checkpoint_dir)
@@ -109,7 +110,7 @@ class WanT2V:
         if dit_fsdp:
             self.model = shard_fn(self.model)
         else:
-            self.model.to(torch.device('cpu'))
+            self.model.to(self.device)
 
         self.sample_neg_prompt = config.sample_neg_prompt
 
@@ -176,7 +177,6 @@ class WanT2V:
         seed_g.manual_seed(seed)
 
         if not self.t5_cpu:
-            self.text_encoder.model.to(self.device)
             context = self.text_encoder([input_prompt], self.device)
             context_null = self.text_encoder([n_prompt], self.device)
             if offload_model:
@@ -253,9 +253,8 @@ class WanT2V:
                 latent_model_input = latents
 
                 timestep = [t]
-                timestep = torch.stack(timestep)
+                timestep = torch.stack(timestep).to(self.device)
 
-                self.model.to(self.device)
                 noise_pred_cond = self.model(
                     latent_model_input, t=timestep, **arg_c)[0]
                 if few_step and no_cfg:

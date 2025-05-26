@@ -107,8 +107,8 @@ The following table shows the comparisons on inference time using a single A100 
 
 | Model | Setting(height/width/frame) | Inference Time(s) |
 |:-----:|:---------------------------:|:-----------------:|
-| Wanx  |        480px832px81f        |       1020        |
-| Ours  |        480px832px81f        | 145(7.0x faster)  |
+| Wanx  |        480px832px81f        |        932        |
+| Ours  |        480px832px81f        |  97(9.6x faster)  |
 
 ## 🔗 BibTeX
 

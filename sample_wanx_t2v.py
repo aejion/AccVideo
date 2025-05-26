@@ -284,7 +284,7 @@ def generate(args):
             sampling_steps=args.sample_steps,
             guide_scale=args.sample_guide_scale,
             seed=1024,
-            offload_model=True,
+            offload_model=False,
             few_step=True,
             no_cfg=True)
 
