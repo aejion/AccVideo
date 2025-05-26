@@ -100,8 +100,7 @@ python sample_wanx_t2v.py \
        --ckpt_dir ./wanx_t2v_ckpts \
        --sample_solver 'unipc' \
        --save_dir ./results/accvideo_wanx_14B \
-       --sample_steps 10 \
-       --dit_ckpt_path ./wanx_t2v_ckpts/diffusion_pytorch_model.pt
+       --sample_steps 10
 ```
 
 The following table shows the comparisons on inference time using a single A100 GPU:

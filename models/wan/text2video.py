@@ -86,10 +86,8 @@ class WanT2V:
         self.vae.model.to(torch.device('cpu'))
 
         logging.info(f"Creating WanModel from {checkpoint_dir}")
-        self.model = WanModel.from_config(checkpoint_dir)
-        if dit_path is not None:
-            state_dict = torch.load(dit_path, map_location=lambda storage, loc: storage)
-            self.model.load_state_dict(state_dict, strict=True)
+        self.model = WanModel.from_pretrained(checkpoint_dir)
+
         self.model.eval().requires_grad_(False)
 
         if use_usp:
