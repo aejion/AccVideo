@@ -22,6 +22,9 @@ https://github.com/user-attachments/assets/59f3c5db-d585-4773-8d92-366c1eb040f0
 ## 🎥 Demo (Based on WanXT2V-14B)
 
 
+https://github.com/user-attachments/assets/ff9724da-b76c-478d-a9bf-0ee7240494b2
+
+
 
 ## 📑 Open-source Plan
 
