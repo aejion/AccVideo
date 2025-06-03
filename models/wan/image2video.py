@@ -16,10 +16,6 @@ import torch.cuda.amp as amp
 import torch.distributed as dist
 import torchvision.transforms.functional as TF
 from tqdm import tqdm
-import io
-from petrel_client.client import Client
-client = Client('~/petreloss.conf', enable_mc=True)
-
 from .distributed.fsdp import shard_model
 from .modules.clip import CLIPModel
 from .modules.model import WanModel
@@ -44,7 +40,6 @@ class WanI2V:
         use_usp=False,
         t5_cpu=False,
         init_on_cpu=True,
-        dit_path=None,
     ):
         r"""
         Initializes the image-to-video generation model components.
@@ -103,13 +98,6 @@ class WanI2V:
 
         logging.info(f"Creating WanModel from {checkpoint_dir}")
         self.model = WanModel.from_pretrained(checkpoint_dir)
-        if dit_path is not None:
-            if dit_path.startswith("p2_norm"):
-                state_dict = torch.load(io.BytesIO(client.get(dit_path)),
-                                        map_location=lambda storage, loc: storage)
-            else:
-                state_dict = torch.load(dit_path, map_location=lambda storage, loc: storage)
-            self.model.load_state_dict(state_dict, strict=True)
         self.model.eval().requires_grad_(False)
 
         if t5_fsdp or dit_fsdp or use_usp:
@@ -193,17 +181,15 @@ class WanI2V:
 
         F = frame_num
         h, w = img.shape[1:]
-        # aspect_ratio = h / w
-        # lat_h = round(
-        #     np.sqrt(max_area * aspect_ratio) // self.vae_stride[1] //
-        #     self.patch_size[1] * self.patch_size[1])
-        # lat_w = round(
-        #     np.sqrt(max_area / aspect_ratio) // self.vae_stride[2] //
-        #     self.patch_size[2] * self.patch_size[2])
-        # h = lat_h * self.vae_stride[1]
-        # w = lat_w * self.vae_stride[2]
-        lat_h = h // self.vae_stride[1]
-        lat_w = w // self.vae_stride[2]
+        aspect_ratio = h / w
+        lat_h = round(
+            np.sqrt(max_area * aspect_ratio) // self.vae_stride[1] //
+            self.patch_size[1] * self.patch_size[1])
+        lat_w = round(
+            np.sqrt(max_area / aspect_ratio) // self.vae_stride[2] //
+            self.patch_size[2] * self.patch_size[2])
+        h = lat_h * self.vae_stride[1]
+        w = lat_w * self.vae_stride[2]
 
         max_seq_len = ((F - 1) // self.vae_stride[0] + 1) * lat_h * lat_w // (
             self.patch_size[1] * self.patch_size[2])
@@ -238,8 +224,8 @@ class WanI2V:
             self.text_encoder.model.to(self.device)
             context = self.text_encoder([input_prompt], self.device)
             context_null = self.text_encoder([n_prompt], self.device)
-            if offload_model:
-                self.text_encoder.model.cpu()
+            # if offload_model:
+            self.text_encoder.model.cpu()
         else:
             context = self.text_encoder([input_prompt], torch.device('cpu'))
             context_null = self.text_encoder([n_prompt], torch.device('cpu'))
@@ -299,8 +285,6 @@ class WanI2V:
                     sampling_steps, device=self.device)
                 timesteps = sample_scheduler.timesteps
                 if few_step:
-                    # start_latent_list = [0, 10, 20, 30, 40, 50]
-                    # start_latent_list = [0, 5, 10, 15, 20, 25, 30, 35, 40]
                     start_latent_list = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40]
                     sample_scheduler.sigmas = sample_scheduler.sigmas[start_latent_list]
                     num_inference_steps = len(start_latent_list) - 1
@@ -308,7 +292,7 @@ class WanI2V:
             else:
                 raise NotImplementedError("Unsupported solver.")
 
-            print(timesteps, sample_scheduler.sigmas)
+            print('inference timesteps and sigmas:', timesteps, sample_scheduler.sigmas)
             # sample videos
             latent = noise
 

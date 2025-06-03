@@ -9,6 +9,7 @@ This repository is the official PyTorch implementation of [AccVideo](https://arx
 
 ## 🔥🔥🔥 News
 
+* Jun 3, 2025: We release the inference code and [model weights](https://huggingface.co/aejion/AccVideo-WanX-I2V-480P-14B) of AccVideo based on WanXI2V-480P-14B.
 * May 26, 2025: We release the inference code and [model weights](https://huggingface.co/aejion/AccVideo-WanX-T2V-14B) of AccVideo based on WanXT2V-14B.
 * Mar 31, 2025: [ComfyUI-Kijai (FP8 Inference)](https://huggingface.co/Kijai/HunyuanVideo_comfy/blob/main/accvideo-t2v-5-steps_fp8_e4m3fn.safetensors): ComfyUI-Integration by [Kijai](https://huggingface.co/Kijai)
 * Mar 26, 2025: We release the inference code and [model weights](https://huggingface.co/aejion/AccVideo) of AccVideo based on HunyuanT2V.
@@ -23,6 +24,8 @@ https://github.com/user-attachments/assets/59f3c5db-d585-4773-8d92-366c1eb040f0
 
 
 https://github.com/user-attachments/assets/ff9724da-b76c-478d-a9bf-0ee7240494b2
+
+## 🎥 Demo (Based on WanXI2V-480P-14B)
 
 
 
@@ -58,6 +61,12 @@ To download the checkpoints (based on WanX-T2V-14B), use the following command:
 ```bash
 # Download the model weight
 huggingface-cli download aejion/AccVideo-WanX-T2V-14B --local-dir ./wanx_t2v_ckpts
+```
+
+To download the checkpoints (based on WanX-I2V-480P-14B), use the following command:
+```bash
+# Download the model weight
+huggingface-cli download aejion/AccVideo-WanX-I2V-480P-14B --local-dir ./wanx_i2v_ckpts
 ```
 
 ## 🚀 Inference
@@ -110,8 +119,39 @@ The following table shows the comparisons on inference time using a single A100 
 
 | Model | Setting(height/width/frame) | Inference Time(s) |
 |:-----:|:---------------------------:|:-----------------:|
-| Wanx  |        480px832px81f        |        932        |
+| WanX  |        480px832px81f        |        932        |
 | Ours  |        480px832px81f        |  97(9.6x faster)  |
+
+### Inference for WanXI2V-480P
+
+To run the inference, use the following command:
+```bash
+python sample_wanx_i2v.py \
+       --task i2v-14B \
+       --size 832*480 \
+       --ckpt_dir ./wanx_i2v_ckpts \
+       --sample_solver 'unipc' \
+       --save_dir ./results/accvideo_wanx_i2v_14B \
+       --sample_steps 10
+```
+
+The following table shows the comparisons on inference time using a single A100 GPU:
+
+|  Model   | Setting(height/width/frame) | Inference Time(s) |
+|:--------:|:---------------------------:|:-----------------:|
+| WanX-I2V |        480px832px81f        |        768        |
+|   Ours   |        480px832px81f        | 112(6.8x faster)  |
+
+
+## 🏆 VBench Results
+
+We report VBench evaluation results for our distilled models. We utilized the respective augmented prompts provided by the VBench team to generate videos. ([HunyuanVideo augmented prompts](https://github.com/Vchitect/VBench/blob/master/prompts/augmented_prompts/hunyuan_all_dimension.txt) for AccVideo-HunyuanT2V and [WanX augmented prompts](https://github.com/Vchitect/VBench/blob/master/prompts/augmented_prompts/Wan2.1-T2V-1.3B/all_dimension_aug_wanx_seed42.txt) for AccVideo-WanXT2V)
+
+|        Model        | Setting(height/width/frame) | Total Score | Quality Score | Semantic Score | Subject Consistency | Background Consistency | Temporal Flickering | Motion Smoothness | Dynamic Degree | Aesthetic Quality | Image Quality | Object Class | Multiple Objects | Human Action | Color  | Spatial Relationship | Scene  | Appearance Style | Temporal Style | Overall Consistency | 
+|:-------------------:|:---------------------------:|:-----------:|---------------|----------------|---------------------|------------------------|---------------------|-------------------|----------------|-------------------|---------------|--------------|------------------|--------------|--------|----------------------|--------|------------------|----------------|---------------------|
+| AccVideo-HunyuanT2V |        544px960px93f        |   83.26%    | 84.58%        | 77.96%         | 94.46%              | 97.45%                 | 99.18%              | 98.79%            | 75.00%         | 62.08%            | 65.64%        | 92.99%       | 67.33%           | 95.60%       | 94.11% | 75.70%               | 54.72% | 19.87%           | 23.71%         | 27.21%              |
+|  AccVideo-WanXT2V   |        480px832px81f        |   85.95%    | 86.62%        | 83.25%         | 95.02%              | 97.75%                 | 99.54%              | 97.95%            | 93.33%         | 64.21%            | 68.42%        | 98.38%       | 86.58%           | 97.40%       | 92.04% | 75.68%               | 59.82% | 23.88%           | 24.62%         | 27.34%              |
+
 
 ## 🔗 BibTeX
 
