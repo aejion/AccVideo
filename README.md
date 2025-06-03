@@ -29,6 +29,10 @@ https://github.com/user-attachments/assets/ff9724da-b76c-478d-a9bf-0ee7240494b2
 
 
 
+https://github.com/user-attachments/assets/08f11ef7-c57a-4b24-87ff-e72cb3a34d1d
+
+
+
 ## 📑 Open-source Plan
 
 - [x] Inference 
