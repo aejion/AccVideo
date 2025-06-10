@@ -9,6 +9,7 @@ This repository is the official PyTorch implementation of [AccVideo](https://arx
 
 ## 🔥🔥🔥 News
 
+* Jun 10, 2025: [CivitAI](https://civitai.com/models/1585622) and [Huggingface](https://huggingface.co/Kijai/WanVideo_comfy/blob/main/Wan21_AccVid_T2V_14B_lora_rank32_fp16.safetensors): WanX-14B LoRA extracted by [Kijai](https://huggingface.co/Kijai), compatible for use with other LoRAs.
 * Jun 3, 2025: We release the inference code and [model weights](https://huggingface.co/aejion/AccVideo-WanX-I2V-480P-14B) of AccVideo based on WanXI2V-480P-14B.
 * May 26, 2025: We release the inference code and [model weights](https://huggingface.co/aejion/AccVideo-WanX-T2V-14B) of AccVideo based on WanXT2V-14B.
 * Mar 31, 2025: [ComfyUI-Kijai (FP8 Inference)](https://huggingface.co/Kijai/HunyuanVideo_comfy/blob/main/accvideo-t2v-5-steps_fp8_e4m3fn.safetensors): ComfyUI-Integration by [Kijai](https://huggingface.co/Kijai)
